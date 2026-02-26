@@ -18,7 +18,7 @@ Feature: Test importing questions from GIFT with medias format.
     And I am on "Course 1" course homepage
 
   Scenario: import one GIFT with medias question
-    When I navigate to "Question bank > Import" in current page administration
+    When I am on the "Course 1" "core_question > course question import" page
     And I set the field "id_format_giftmedia" to "1"
     And I upload "question/format/giftmedia/tests/fixtures/giftmedia_example.zip" file to "Import" filemanager
     And I press "id_submitbutton"
