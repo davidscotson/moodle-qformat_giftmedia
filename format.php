@@ -131,14 +131,14 @@ class qformat_giftmedia extends qformat_gift {
         } else {
             $newfilename = clean_param(str_replace('/', '__', $filepathinsidetempdir . '__' . $filename), PARAM_FILE);
         }
-        $filerecord = array(
+        $filerecord = [
             'contextid' => context_user::instance($USER->id)->id,
             'component' => 'user',
             'filearea'  => 'draft',
             'itemid'    => $text['itemid'],
             'filepath'  => '/',
             'filename'  => $newfilename,
-        );
+        ];
         if ($filepathinsidetempdir == '.') {
             $fs->create_file_from_pathname($filerecord, $tempdir . '/' . $filename);
         } else {
@@ -156,10 +156,10 @@ class qformat_giftmedia extends qformat_gift {
      * @return array with keys text, format, itemid.
      */
     public function text_field($text) {
-        $data = array();
+        $data = [];
 
         preg_match_all('|"@@PLUGINFILE@@/([^"]*)"|i', $text, $out); // Find all pluginfile refs.
-        $filepaths = array();
+        $filepaths = [];
         foreach ($out[1] as $path) {
             $fullpath = $this->tempdir . '/' . $path;
             if (is_readable($fullpath) && !in_array($path, $filepaths)) {
@@ -223,7 +223,7 @@ class qformat_giftmedia extends qformat_gift {
             if ($packer->extract_to_pathname($this->tempdir . '/gift.zip', $this->tempdir)) {
                 // Search for a text file in the zip archive.
                 // TODO ? search it, even if it is not a root level ?
-                $filenames = array();
+                $filenames = [];
                 $iterator = new DirectoryIterator($this->tempdir);
                 foreach ($iterator as $fileinfo) {
                     if ($fileinfo->isFile() && strtolower(pathinfo($fileinfo->getFilename(), PATHINFO_EXTENSION)) == 'txt') {
@@ -310,11 +310,9 @@ class qformat_giftmedia extends qformat_gift {
             $description = true;
             $answertext = '';
             $answerlength = 0;
-
         } else if ($answerstart === false || $answerfinish === false) {
             $this->error(get_string('braceerror', 'qformat_gift'), $text);
             return false;
-
         } else {
             $answerlength = $answerfinish - $answerstart;
             $answertext = trim(substr($text, $answerstart + 1, $answerlength - 1));
@@ -367,31 +365,29 @@ class qformat_giftmedia extends qformat_gift {
         // Give plugins first try.
         // Plugins must promise not to intercept standard qtypes
         // MDL-12346, this could be called from lesson mod which has its own base class =(.
-        if (method_exists($this, 'try_importing_using_qtypes')
-                && ($tryquestion = $this->try_importing_using_qtypes($lines, $question, $answertext))) {
+        if (
+            method_exists($this, 'try_importing_using_qtypes')
+                && ($tryquestion = $this->try_importing_using_qtypes($lines, $question, $answertext))
+        ) {
             return $tryquestion;
         }
 
         if ($description) {
             $question->qtype = 'description';
-
         } else if ($answertext == '') {
             $question->qtype = 'essay';
-
         } else if ($answertext[0] == '#') {
             $question->qtype = 'numerical';
-
         } else if (strpos($answertext, '~') !== false) {
             // Only Multiplechoice questions contain tilde ~.
             $question->qtype = 'multichoice';
-
-        } else if (strpos($answertext, '=') !== false
-                && strpos($answertext, '->') !== false) {
+        } else if (
+            strpos($answertext, '=') !== false
+                && strpos($answertext, '->') !== false
+        ) {
             // Only Matching contains both = and ->.
             $question->qtype = 'match';
-
         } else { // Either truefalse or shortanswer.
-
             // Truefalse question check.
             $truefalsecheck = $answertext;
             if (strpos($answertext, '#') > 0) {
@@ -399,10 +395,9 @@ class qformat_giftmedia extends qformat_gift {
                 $truefalsecheck = trim(substr($answertext, 0, strpos($answertext, "#")));
             }
 
-            $validtfanswers = array('T', 'TRUE', 'F', 'FALSE');
+            $validtfanswers = ['T', 'TRUE', 'F', 'FALSE'];
             if (in_array($truefalsecheck, $validtfanswers)) {
                 $question->qtype = 'truefalse';
-
             } else { // Must be shortanswer.
                 $question->qtype = 'shortanswer';
             }
@@ -426,10 +421,10 @@ class qformat_giftmedia extends qformat_gift {
                 $question->responsefieldlines = 15;
                 $question->attachments = 0;
                 $question->attachmentsrequired = 0;
-                $question->graderinfo = array(
-                        'text' => '', 'format' => FORMAT_HTML);
-                $question->responsetemplate = array(
-                        'text' => '', 'format' => FORMAT_HTML);
+                $question->graderinfo = [
+                        'text' => '', 'format' => FORMAT_HTML, ];
+                $question->responsetemplate = [
+                        'text' => '', 'format' => FORMAT_HTML, ];
                 return $question;
 
             case 'multichoice':
@@ -462,14 +457,12 @@ class qformat_giftmedia extends qformat_gift {
                     if ($answer[0] == '=') {
                         $answerweight = 1;
                         $answer = substr($answer, 1);
-
                     } else if (preg_match($giftanswerweightregex, $answer)) {    // Check for properly formatted answer weight.
                         $answerweight = $this->answerweightparser($answer);
-
                     } else {     // Default, i.e., wrong anwer.
                         $answerweight = 0;
                     }
-                    list($question->answer[$key], $question->feedback[$key])
+                    [$question->answer[$key], $question->feedback[$key]]
                             = $this->commentparser($answer, $question->questiontextformat);
                     $question->fraction[$key] = $answerweight;
                 }  // End foreach answer.
@@ -500,15 +493,18 @@ class qformat_giftmedia extends qformat_gift {
 
                     $marker = strpos($answer, '->');
                     $question->subquestions[$key] = $this->parse_text_with_format(
-                            substr($answer, 0, $marker), $question->questiontextformat);
+                        substr($answer, 0, $marker),
+                        $question->questiontextformat
+                    );
                     $question->subanswers[$key] = trim($this->escapedchar_post(
-                            substr($answer, $marker + 2)));
+                        substr($answer, $marker + 2)
+                    ));
                 }
 
                 return $question;
 
             case 'truefalse':
-                list($answer, $wrongfeedback, $rightfeedback)
+                [$answer, $wrongfeedback, $rightfeedback]
                         = $this->split_truefalse_comment($answertext, $question->questiontextformat);
 
                 if ($answer['text'] == "T" || $answer['text'] == "TRUE") {
@@ -549,8 +545,10 @@ class qformat_giftmedia extends qformat_gift {
                         $answerweight = 1;
                     }
 
-                    list($answer, $question->feedback[$key]) = $this->commentparser(
-                            $answer, $question->questiontextformat);
+                    [$answer, $question->feedback[$key]] = $this->commentparser(
+                        $answer,
+                        $question->questiontextformat
+                    );
 
                     $question->answer[$key] = $answer['text'];
                     $question->fraction[$key] = $answerweight;
@@ -595,8 +593,10 @@ class qformat_giftmedia extends qformat_gift {
                         $answerweight = 1;
                     }
 
-                    list($answer, $question->feedback[$key]) = $this->commentparser(
-                            $answer, $question->questiontextformat);
+                    [$answer, $question->feedback[$key]] = $this->commentparser(
+                        $answer,
+                        $question->questiontextformat
+                    );
                     $question->fraction[$key] = $answerweight;
                     $answer = $answer['text'];
 
@@ -630,8 +630,10 @@ class qformat_giftmedia extends qformat_gift {
                 if ($wrongfeedback) {
                     $key += 1;
                     $question->fraction[$key] = 0;
-                    list($notused, $question->feedback[$key]) = $this->commentparser(
-                            $wrongfeedback, $question->questiontextformat);
+                    [$notused, $question->feedback[$key]] = $this->commentparser(
+                        $wrongfeedback,
+                        $question->questiontextformat
+                    );
                     $question->answer[$key] = '*';
                     $question->tolerance[$key] = '';
                 }
@@ -641,7 +643,6 @@ class qformat_giftmedia extends qformat_gift {
             default:
                 $this->error(get_string('giftnovalidquestion', 'qformat_gift'), $text);
                 return false;
-
         }
     }
 }

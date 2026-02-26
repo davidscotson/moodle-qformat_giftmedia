@@ -29,6 +29,6 @@ $plugin->version   = 2022071700;
 $plugin->requires  = 2013042600;
 $plugin->release   = '1.05 for Moodle 2.7 ... 4.0';
 $plugin->maturity  = MATURITY_STABLE;
-$plugin->dependencies = array(
-    'qformat_gift' => 2012112900
-);
+$plugin->dependencies = [
+    'qformat_gift' => 2012112900,
+];

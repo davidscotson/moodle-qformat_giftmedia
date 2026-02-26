@@ -44,10 +44,12 @@ require_once($CFG->dirroot . '/question/engine/tests/helpers.php');
  * @copyright 2017 Jean-Michel Vedrine
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class qformat_giftmedia_test extends question_testcase {
+class gifmediatformat_test extends question_testcase {
     public function assert_same_gift($expectedtext, $text) {
-        $this->assertEquals(str_replace("\r\n", "\n", $expectedtext),
-                str_replace("\r\n", "\n", $text));
+        $this->assertEquals(
+            str_replace("\r\n", "\n", $expectedtext),
+            str_replace("\r\n", "\n", $text)
+        );
     }
 
     public function test_import_essay() {
@@ -59,7 +61,7 @@ class qformat_giftmedia_test extends question_testcase {
         $importer = new qformat_giftmedia();
         $q = $importer->readquestion($lines);
 
-        $expectedq = (object) array(
+        $expectedq = (object) [
             'name' => 'Q8',
             'questiontext' => 'How are you?',
             'questiontextformat' => FORMAT_HTML,
@@ -72,11 +74,11 @@ class qformat_giftmedia_test extends question_testcase {
             'responseformat' => 'editor',
             'responsefieldlines' => 15,
             'attachments' => 0,
-            'graderinfo' => array(
+            'graderinfo' => [
                 'text' => '',
                 'format' => FORMAT_HTML,
-            ),
-        );
+            ],
+        ];
 
         $this->assert(new question_check_specified_fields_expectation($expectedq), $q);
     }
@@ -96,7 +98,7 @@ class qformat_giftmedia_test extends question_testcase {
         $importer = new qformat_giftmedia();
         $q = $importer->readquestion($lines);
 
-        $expectedq = (object) array(
+        $expectedq = (object) [
             'name' => 'Moodle activities',
             'questiontext' => 'Match the <b>activity</b> to the description.',
             'questiontextformat' => FORMAT_HTML,
@@ -107,51 +109,51 @@ class qformat_giftmedia_test extends question_testcase {
             'penalty' => 0.3333333,
             'length' => 1,
             'shuffleanswers' => '1',
-            'correctfeedback' => array(
+            'correctfeedback' => [
                 'text' => '',
                 'format' => FORMAT_HTML,
-                'files' => array(),
-            ),
-            'partiallycorrectfeedback' => array(
+                'files' => [],
+            ],
+            'partiallycorrectfeedback' => [
                 'text' => '',
                 'format' => FORMAT_HTML,
-                'files' => array(),
-            ),
-            'incorrectfeedback' => array(
+                'files' => [],
+            ],
+            'incorrectfeedback' => [
                 'text' => '',
                 'format' => FORMAT_HTML,
-                'files' => array(),
-            ),
-            'subquestions' => array(
-                0 => array(
+                'files' => [],
+            ],
+            'subquestions' => [
+                0 => [
                     'text' => 'An activity supporting asynchronous discussions.',
                     'format' => FORMAT_HTML,
-                ),
-                1 => array(
+                ],
+                1 => [
                     'text' => 'A teacher asks a question and specifies a choice of multiple responses.',
                     'format' => FORMAT_HTML,
-                ),
-                2 => array(
+                ],
+                2 => [
                     'text' => 'A bank of record entries which participants can add to.',
                     'format' => FORMAT_HTML,
-                ),
-                3 => array(
+                ],
+                3 => [
                     'text' => 'A collection of web pages that anyone can add to or edit.',
                     'format' => FORMAT_HTML,
-                ),
-                4 => array(
+                ],
+                4 => [
                     'text' => '',
                     'format' => FORMAT_HTML,
-                ),
-            ),
-            'subanswers' => array(
+                ],
+            ],
+            'subanswers' => [
                 0 => 'Forum',
                 1 => 'Choice',
                 2 => 'Database',
                 3 => 'Wiki',
                 4 => 'Chat',
-            ),
-        );
+            ],
+        ];
 
         // Repeated test for better failure messages.
         $this->assertEquals($expectedq->subquestions, $q->subquestions);
@@ -172,7 +174,7 @@ class qformat_giftmedia_test extends question_testcase {
         $importer = new qformat_giftmedia();
         $q = $importer->readquestion($lines);
 
-        $expectedq = (object) array(
+        $expectedq = (object) [
             'name' => 'Q2',
             'questiontext' => "What's between orange and green in the spectrum?",
             'questiontextformat' => FORMAT_HTML,
@@ -185,51 +187,51 @@ class qformat_giftmedia_test extends question_testcase {
             'single' => 1,
             'shuffleanswers' => '1',
             'answernumbering' => 'abc',
-            'correctfeedback' => array(
+            'correctfeedback' => [
                 'text' => '',
                 'format' => FORMAT_HTML,
-                'files' => array(),
-            ),
-            'partiallycorrectfeedback' => array(
+                'files' => [],
+            ],
+            'partiallycorrectfeedback' => [
                 'text' => '',
                 'format' => FORMAT_HTML,
-                'files' => array(),
-            ),
-            'incorrectfeedback' => array(
+                'files' => [],
+            ],
+            'incorrectfeedback' => [
                 'text' => '',
                 'format' => FORMAT_HTML,
-                'files' => array(),
-            ),
-            'answer' => array(
-                0 => array(
+                'files' => [],
+            ],
+            'answer' => [
+                0 => [
                     'text' => 'yellow',
                     'format' => FORMAT_HTML,
-                ),
-                1 => array(
+                ],
+                1 => [
                     'text' => 'red',
                     'format' => FORMAT_HTML,
-                ),
-                2 => array(
+                ],
+                2 => [
                     'text' => 'blue',
                     'format' => FORMAT_HTML,
-                ),
-            ),
-            'fraction' => array(1, 0, 0),
-            'feedback' => array(
-                0 => array(
+                ],
+            ],
+            'fraction' => [1, 0, 0],
+            'feedback' => [
+                0 => [
                     'text' => 'right; good!',
                     'format' => FORMAT_HTML,
-                ),
-                1 => array(
+                ],
+                1 => [
                     'text' => "wrong, it's yellow",
                     'format' => FORMAT_HTML,
-                ),
-                2 => array(
+                ],
+                2 => [
                     'text' => "wrong, it's yellow",
                     'format' => FORMAT_HTML,
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
 
         // Repeated test for better failure messages.
         $this->assertEquals($expectedq->answer, $q->answer);
@@ -252,7 +254,7 @@ class qformat_giftmedia_test extends question_testcase {
         $importer = new qformat_giftmedia();
         $q = $importer->readquestion($lines);
 
-        $expectedq = (object) array(
+        $expectedq = (object) [
             'name' => 'colours',
             'questiontext' => "What's between orange and green in the spectrum?",
             'questiontextformat' => FORMAT_HTML,
@@ -265,59 +267,59 @@ class qformat_giftmedia_test extends question_testcase {
             'single' => 0,
             'shuffleanswers' => '1',
             'answernumbering' => 'abc',
-            'correctfeedback' => array(
+            'correctfeedback' => [
                 'text' => '',
                 'format' => FORMAT_HTML,
-                'files' => array(),
-            ),
-            'partiallycorrectfeedback' => array(
+                'files' => [],
+            ],
+            'partiallycorrectfeedback' => [
                 'text' => '',
                 'format' => FORMAT_HTML,
-                'files' => array(),
-            ),
-            'incorrectfeedback' => array(
+                'files' => [],
+            ],
+            'incorrectfeedback' => [
                 'text' => '',
                 'format' => FORMAT_HTML,
-                'files' => array(),
-            ),
-            'answer' => array(
-                0 => array(
+                'files' => [],
+            ],
+            'answer' => [
+                0 => [
                     'text' => 'yellow',
                     'format' => FORMAT_HTML,
-                ),
-                1 => array(
+                ],
+                1 => [
                     'text' => 'red',
                     'format' => FORMAT_HTML,
-                ),
-                2 => array(
+                ],
+                2 => [
                     'text' => 'off-beige',
                     'format' => FORMAT_HTML,
-                ),
-                3 => array(
+                ],
+                3 => [
                     'text' => 'blue',
                     'format' => FORMAT_HTML,
-                ),
-            ),
-            'fraction' => array(0.5, -1, 0.5, -1),
-            'feedback' => array(
-                0 => array(
+                ],
+            ],
+            'fraction' => [0.5, -1, 0.5, -1],
+            'feedback' => [
+                0 => [
                     'text' => 'right; good!',
                     'format' => FORMAT_HTML,
-                ),
-                1 => array(
+                ],
+                1 => [
                     'text' => "wrong",
                     'format' => FORMAT_HTML,
-                ),
-                2 => array(
+                ],
+                2 => [
                     'text' => "right; good!",
                     'format' => FORMAT_HTML,
-                ),
-                3 => array(
+                ],
+                3 => [
                     'text' => "wrong",
                     'format' => FORMAT_HTML,
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
 
         // Repeated test for better failure messages.
         $this->assertEquals($expectedq->answer, $q->answer);
@@ -339,7 +341,7 @@ class qformat_giftmedia_test extends question_testcase {
         $importer = new qformat_giftmedia();
         $q = $importer->readquestion($lines);
 
-        $expectedq = (object) array(
+        $expectedq = (object) [
                 'name' => 'colours',
                 'questiontext' => "What's between orange and green in the spectrum?",
                 'questiontextformat' => FORMAT_HTML,
@@ -352,51 +354,51 @@ class qformat_giftmedia_test extends question_testcase {
                 'single' => 0,
                 'shuffleanswers' => '1',
                 'answernumbering' => 'abc',
-                'correctfeedback' => array(
+                'correctfeedback' => [
                         'text' => '',
                         'format' => FORMAT_HTML,
-                        'files' => array(),
-                ),
-                'partiallycorrectfeedback' => array(
+                        'files' => [],
+                ],
+                'partiallycorrectfeedback' => [
                         'text' => '',
                         'format' => FORMAT_HTML,
-                        'files' => array(),
-                ),
-                'incorrectfeedback' => array(
+                        'files' => [],
+                ],
+                'incorrectfeedback' => [
                         'text' => '',
                         'format' => FORMAT_HTML,
-                        'files' => array(),
-                ),
-                'answer' => array(
-                        0 => array(
+                        'files' => [],
+                ],
+                'answer' => [
+                        0 => [
                                 'text' => 'yellow',
                                 'format' => FORMAT_HTML,
-                        ),
-                        1 => array(
+                        ],
+                        1 => [
                                 'text' => 'red',
                                 'format' => FORMAT_HTML,
-                        ),
-                        2 => array(
+                        ],
+                        2 => [
                                 'text' => 'blue',
                                 'format' => FORMAT_HTML,
-                        ),
-                ),
-                'fraction' => array(1, -0.5, -0.5),
-                'feedback' => array(
-                        0 => array(
+                        ],
+                ],
+                'fraction' => [1, -0.5, -0.5],
+                'feedback' => [
+                        0 => [
                                 'text' => 'right; good!',
                                 'format' => FORMAT_HTML,
-                        ),
-                        1 => array(
+                        ],
+                        1 => [
                                 'text' => "wrong",
                                 'format' => FORMAT_HTML,
-                        ),
-                        2 => array(
+                        ],
+                        2 => [
                                 'text' => "wrong",
                                 'format' => FORMAT_HTML,
-                        ),
-                ),
-        );
+                        ],
+                ],
+        ];
 
         // Repeated test for better failure messages.
         $this->assertEquals($expectedq->answer, $q->answer);
@@ -413,7 +415,7 @@ class qformat_giftmedia_test extends question_testcase {
         $importer = new qformat_giftmedia();
         $q = $importer->readquestion($lines);
 
-        $expectedq = (object) array(
+        $expectedq = (object) [
             'name' => 'Q5',
             'questiontext' => "What is a number from 1 to 5?",
             'questiontextformat' => FORMAT_HTML,
@@ -423,24 +425,24 @@ class qformat_giftmedia_test extends question_testcase {
             'defaultmark' => 1,
             'penalty' => 0.3333333,
             'length' => 1,
-            'answer' => array(
+            'answer' => [
                 '3',
                 '*',
-            ),
-            'fraction' => array(1, 0),
-            'feedback' => array(
-                0 => array(
+            ],
+            'fraction' => [1, 0],
+            'feedback' => [
+                0 => [
                     'text' => '',
                     'format' => FORMAT_HTML,
-                    'files' => array(),
-                ),
-                1 => array(
+                    'files' => [],
+                ],
+                1 => [
                     'text' => "Completely wrong",
                     'format' => FORMAT_HTML,
-                ),
-            ),
-            'tolerance' => array(2, 0),
-        );
+                ],
+            ],
+            'tolerance' => [2, 0],
+        ];
 
         // Repeated test for better failure messages.
         $this->assertEquals($expectedq->answer, $q->answer);
@@ -462,7 +464,7 @@ class qformat_giftmedia_test extends question_testcase {
         $importer = new qformat_giftmedia();
         $q = $importer->readquestion($lines);
 
-        $expectedq = (object) array(
+        $expectedq = (object) [
             'name' => 'Shortanswer',
             'questiontext' => "Which is the best animal?",
             'questiontextformat' => FORMAT_HTML,
@@ -472,27 +474,27 @@ class qformat_giftmedia_test extends question_testcase {
             'defaultmark' => 1,
             'penalty' => 0.3333333,
             'length' => 1,
-            'answer' => array(
+            'answer' => [
                 'Frog',
                 'Cat',
                 '*',
-            ),
-            'fraction' => array(1, 0.5, 0),
-            'feedback' => array(
-                0 => array(
+            ],
+            'fraction' => [1, 0.5, 0],
+            'feedback' => [
+                0 => [
                     'text' => 'Good!',
                     'format' => FORMAT_HTML,
-                ),
-                1 => array(
+                ],
+                1 => [
                     'text' => "What is it with Moodlers and cats?",
                     'format' => FORMAT_HTML,
-                ),
-                2 => array(
+                ],
+                2 => [
                     'text' => "Completely wrong",
                     'format' => FORMAT_HTML,
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
 
         // Repeated test for better failure messages.
         $this->assertEquals($expectedq->answer, $q->answer);
@@ -515,7 +517,7 @@ class qformat_giftmedia_test extends question_testcase {
         $importer = new qformat_giftmedia();
         $q = $importer->readquestion($lines);
 
-        $expectedq = (object) array(
+        $expectedq = (object) [
             'name' => 'Shortanswer',
             'questiontext' => "Which is the best animal?",
             'questiontextformat' => FORMAT_HTML,
@@ -525,30 +527,30 @@ class qformat_giftmedia_test extends question_testcase {
             'defaultmark' => 1,
             'penalty' => 0.3333333,
             'length' => 1,
-            'answer' => array(
+            'answer' => [
                 'Frog',
                 'Cat',
                 '*',
-            ),
-            'fraction' => array(1, 0.5, 0),
-            'feedback' => array(
-                0 => array(
+            ],
+            'fraction' => [1, 0.5, 0],
+            'feedback' => [
+                0 => [
                     'text' => 'Good!',
                     'format' => FORMAT_HTML,
 
-                ),
-                1 => array(
+                ],
+                1 => [
                     'text' => "What is it with Moodlers and cats?",
                     'format' => FORMAT_HTML,
 
-                ),
-                2 => array(
+                ],
+                2 => [
                     'text' => "Completely wrong",
                     'format' => FORMAT_HTML,
 
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
 
         // Repeated test for better failure messages.
         $this->assertEquals($expectedq->answer, $q->answer);
@@ -567,7 +569,7 @@ FALSE#42 is the Ultimate Answer.#You gave the right answer.}";
         $importer = new qformat_giftmedia();
         $q = $importer->readquestion($lines);
 
-        $expectedq = (object) array(
+        $expectedq = (object) [
             'name' => 'Q1',
             'questiontext' => "42 is the Absolute Answer to everything.",
             'questiontextformat' => FORMAT_HTML,
@@ -578,15 +580,15 @@ FALSE#42 is the Ultimate Answer.#You gave the right answer.}";
             'penalty' => 1,
             'length' => 1,
             'correctanswer' => 0,
-            'feedbacktrue' => array(
+            'feedbacktrue' => [
                 'text' => '42 is the Ultimate Answer.',
                 'format' => FORMAT_HTML,
-            ),
-            'feedbackfalse' => array(
+            ],
+            'feedbackfalse' => [
                 'text' => 'You gave the right answer.',
                 'format' => FORMAT_HTML,
-            ),
-        );
+            ],
+        ];
 
         $this->assert(new question_check_specified_fields_expectation($expectedq), $q);
     }
@@ -599,7 +601,7 @@ FALSE#42 is the Ultimate Answer.#You gave the right answer.}";
         $importer = new qformat_giftmedia();
         $q = $importer->readquestion($lines);
 
-        $expectedq = (object) array(
+        $expectedq = (object) [
             'name' => '2-08 TSL',
             'questiontext' => "TSL is blablabla.",
             'questiontextformat' => FORMAT_HTML,
@@ -610,18 +612,18 @@ FALSE#42 is the Ultimate Answer.#You gave the right answer.}";
             'penalty' => 1,
             'length' => 1,
             'correctanswer' => 1,
-            'feedbacktrue' => array(
+            'feedbacktrue' => [
                 'text' => '',
                 'format' => FORMAT_HTML,
-                'files' => array(),
-            ),
-            'feedbackfalse' => array(
+                'files' => [],
+            ],
+            'feedbackfalse' => [
                 'text' => '',
                 'format' => FORMAT_HTML,
-                'files' => array(),
+                'files' => [],
 
-            ),
-        );
+            ],
+        ];
 
         $this->assert(new question_check_specified_fields_expectation($expectedq), $q);
     }
@@ -634,7 +636,7 @@ FALSE#42 is the Ultimate Answer.#You gave the right answer.}";
         $importer = new qformat_giftmedia();
         $q = $importer->readquestion($lines);
 
-        $expectedq = (object) array(
+        $expectedq = (object) [
             'name' => '2-08 TSL',
             'questiontext' => "TSL is blablabla.",
             'questiontextformat' => FORMAT_HTML,
@@ -645,17 +647,17 @@ FALSE#42 is the Ultimate Answer.#You gave the right answer.}";
             'penalty' => 1,
             'length' => 1,
             'correctanswer' => 1,
-            'feedbacktrue' => array(
+            'feedbacktrue' => [
                 'text' => '',
                 'format' => FORMAT_HTML,
-                'files' => array(),
-            ),
-            'feedbackfalse' => array(
+                'files' => [],
+            ],
+            'feedbackfalse' => [
                 'text' => '',
                 'format' => FORMAT_HTML,
-                'files' => array(),
-            ),
-        );
+                'files' => [],
+            ],
+        ];
 
         $this->assert(new question_check_specified_fields_expectation($expectedq), $q);
     }
@@ -672,7 +674,7 @@ FALSE#42 is the Ultimate Answer.#You gave the right answer.}";
         $importer = new qformat_giftmedia();
         $q = $importer->readquestion($lines);
 
-        $expectedq = (object) array(
+        $expectedq = (object) [
             'name' => 'double backslash',
             'questiontext' => 'A \\ B \\\\ C',
             'questiontextformat' => FORMAT_HTML,
@@ -685,11 +687,11 @@ FALSE#42 is the Ultimate Answer.#You gave the right answer.}";
             'responseformat' => 'editor',
             'responsefieldlines' => 15,
             'attachments' => 0,
-            'graderinfo' => array(
+            'graderinfo' => [
                 'text' => '',
                 'format' => FORMAT_HTML,
-            ),
-        );
+            ],
+        ];
 
         $this->assert(new question_check_specified_fields_expectation($expectedq), $q);
     }
@@ -710,7 +712,7 @@ FALSE#42 is the Ultimate Answer.#You gave the right answer.}";
         $importer = new qformat_giftmedia();
         $q = $importer->readquestion($lines);
 
-        $expectedq = (object) array(
+        $expectedq = (object) [
             'name' => 'Q001',
             'questiontext' => '<p>What would running the test method print?</p>
 <pre>
@@ -730,11 +732,11 @@ FALSE#42 is the Ultimate Answer.#You gave the right answer.}";
             'responseformat' => 'editor',
             'responsefieldlines' => 15,
             'attachments' => 0,
-            'graderinfo' => array(
+            'graderinfo' => [
                 'text' => '',
                 'format' => FORMAT_HTML,
-            ),
-        );
+            ],
+        ];
 
         $this->assert(new question_check_specified_fields_expectation($expectedq), $q);
     }
